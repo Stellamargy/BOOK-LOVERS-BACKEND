@@ -39,6 +39,32 @@ class BooksController < ApplicationController
 
     end
 
+    #updating
+    patch '/books/:id' do
+      book_existence = Book.exists?(id: params[:id]) #true/ false
+      if book_existence
+          title = params[:title]
+          image_url = params[:image_url]
+          genre = params[:genre]
+          publisher = params[:publisher]
+          rating = params[:rating]
+          author= params[:author]
+          if(title.present? && image_url.present? && genre.present? && publisher.present? && rating.present? && author.present?)
+              
+              book = Book.find_by(id: params[:id])
+              book.update(title: title, image_url: image_url, genre: genre, publisher: publisher, rating: rating, author_id: author)
+              message = {:success => "Book was successfully updated"}
+              message.to_json
+          else
+              message = {:error => "All field should be field!"}
+              message.to_json
+          end
+
+      else
+          message = {:error => "Book not found!"}
+          message.to_json
+      end
+    end
 
   
 end
