@@ -1,6 +1,6 @@
-class Bookscontroller < ApplicationController
+class BooksController < ApplicationController
 
-    get '/' do
+    get '/books' do
       "books"
     end
   

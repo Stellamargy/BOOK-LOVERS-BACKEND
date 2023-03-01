@@ -1,6 +1,6 @@
-class Authorscontroller < ApplicationController
+class AuthorsController < ApplicationController
 
-    get '/' do
+    get '/authors' do
       "authors"
     end
   
