@@ -66,5 +66,22 @@ class BooksController < ApplicationController
       end
     end
 
+    # deleting a book 
+    delete "/books/:id" do
+      no_of_books = Book.where(id: params[:id]).count() 
+      if no_of_books>0
+          book = Book.find(params[:id])
+          book.destroy
+          message = {:succcess => "Book was  successfully deleted !!"}
+          message.to_json
+
+      else
+          message = {:error => "Book not found"}
+          message.to_json
+      end
+
+
+  end
+
   
 end
