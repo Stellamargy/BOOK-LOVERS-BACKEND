@@ -3,7 +3,6 @@ class BooksController < ApplicationController
     get '/books' do
       books=Book.all
       books.to_json(include: :author)
-  
     end  
 
     #gets a single book with the associated author
@@ -16,25 +15,22 @@ class BooksController < ApplicationController
       title = params[:title]
       image_url = params[:image_url]
       genre = params[:genre]
-      publisher = params[:publisher]
+      publisher = params[:publisher] || ""
       rating = params[:rating]
-      author = params[:author]
-      p(params)
-      p(title,image_url,genre,publisher,rating,author)
+      author_id = params[:author_id]
 
-      if(title.present? && image_url.present? && genre.present? && publisher.present? && rating.present? && author.present?) 
-        book = Book.create(title: title, image_url: image_url, genre: genre, publisher: publisher,  rating: rating, author_id: author)
+      if(title && image_url && genre&& publisher && rating && author_id) 
+        book = Book.create(title: title, image_url: image_url, genre: genre, publisher: publisher,  rating: rating, author_id: author_id)
       if book
-            message = {:succcess => "book successfully created!"}
-            message.to_json
+            book.to_json.status(201)
         else
             message = {:error => "Error saving book!"}
-            message.to_json
+            message.to_json.status(400)
       end
         
     else
         message = {:error => "Please enter all fields!"}
-        message.to_json
+        message.to_json.status(400)
     end
 
     end
