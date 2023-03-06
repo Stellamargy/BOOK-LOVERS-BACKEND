@@ -22,15 +22,15 @@ class BooksController < ApplicationController
       if(title && image_url && genre&& publisher && rating && author_id) 
         book = Book.create(title: title, image_url: image_url, genre: genre, publisher: publisher,  rating: rating, author_id: author_id)
       if book
-            book.to_json.status(201)
+            book.to_json
         else
             message = {:error => "Error saving book!"}
-            message.to_json.status(400)
+            message.to_json
       end
         
     else
         message = {:error => "Please enter all fields!"}
-        message.to_json.status(400)
+        message.to_json
     end
 
     end
